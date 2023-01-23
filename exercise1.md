@@ -1,0 +1,7 @@
+Common steps in a CI setup include linting, testing, and building. In case of PHP project, following tools is used. For testing most CI/CD pipelines provide possibility to run PHPUnit, in some case atoum. In case project is using Laravel framework, also Laravel dusk for browser tests. 
+Most CI/CD systems relay on PHP_CodeSniffer for linting. Optionally other available linting tools and alternatives are PHPStan, PHP Copy Paste Detector, PHP Mess Detector, in case of Laravel framework in use Pint for linting. For build related tools and frameworks available, there are options such as Laravel, Gulp, Phinq to build a PHP project with Jenkins CI/CD, Sympohy framework, and Composer for package dependency managment.
+
+Jenkins and Github Actions are common CI/CD systems, some alternatives are Buddy.works, GitLab Pipelines, Semaphore and Bitbucket Pipelines for example. Most of these support some of tools mentioned above.
+
+When deciding between cloud-based or self-hosted CI/CD. Cloud based solutions are more simply to use and faster to setup. There might be resource limitations. Mostly cloud based CI/CD solutions would be the way to go with php projects, since php is used for web applications. 
+If there is no need for higher calculation power. If there is need for a lot of calculation power, some very specific tasks or higher security, self hosted dedicated server might become an option. Self-hosted system could speed thins up with calculation power, building and testing might be faster with more CPU-power and cores to use.
