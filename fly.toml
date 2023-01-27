@@ -42,7 +42,7 @@ kill_timeout = 5
     timeout = "2s"
 
   [[services.http_checks]]
-    interval = 10000
+    interval = 60000
     grace_period = "5s"
     method = "get"
     path = "/health"
