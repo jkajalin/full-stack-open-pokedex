@@ -30,7 +30,7 @@ COPY --from=builder /root/.volta /root/.volta
 COPY --from=builder /app /app
 RUN chmod +x /app/health_check.sh
 #RUN alias curl='docker run -it --rm curlimages/curl'
-RUN apt install curl
+RUN apt-get update; apt install -y curl
 
 WORKDIR /app
 ENV NODE_ENV production
