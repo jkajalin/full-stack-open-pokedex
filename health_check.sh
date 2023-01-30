@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ##echo "Hello from shell script"
+alias curl='docker run -it --rm curlimages/curl'
 VAR_A=$(curl https://jk-full-stack-pokedex.fly.dev/health | grep -o "ok")
 VAR_B="ok"
 
