@@ -6,8 +6,9 @@ VAR_B="ok"
 
 echo
 if [ "$VAR_A" != "$VAR_B" ]; then
-    echo "Not equal ..."
-else [ "$VAR_A" = "$VAR_B" ]
-    echo "It's a match
-
-exit 0
+    echo "fock"    
+    exit 1
+else [ "$VAR_A" == "$VAR_B" ]
+    echo "It's ok"
+    exit 0
+fi
