@@ -29,7 +29,8 @@ LABEL fly_launch_runtime="nodejs"
 COPY --from=builder /root/.volta /root/.volta
 COPY --from=builder /app /app
 RUN chmod +x /app/health_check.sh
-RUN alias curl='docker run -it --rm curlimages/curl'
+#RUN alias curl='docker run -it --rm curlimages/curl'
+RUN apt install curl
 
 WORKDIR /app
 ENV NODE_ENV production
