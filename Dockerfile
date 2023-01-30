@@ -28,6 +28,7 @@ LABEL fly_launch_runtime="nodejs"
 
 COPY --from=builder /root/.volta /root/.volta
 COPY --from=builder /app /app
+RUN chmod +x /app/health_check.sh
 
 WORKDIR /app
 ENV NODE_ENV production
