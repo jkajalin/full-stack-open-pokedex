@@ -43,7 +43,7 @@ jobs:
         run: flyctl deploy --remote-only
   tag_release:
     needs: [simple_deployment_pipeline]
-    if: ${{ github.event_name == 'push' && contains( join(github.event.commits.*.message, ', '), '#skip' ) ) == false }}
+    if: ${{ github.event_name == 'push' && contains( join(github.event.commits.*.message, ', '), '#skip' )  == false }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
