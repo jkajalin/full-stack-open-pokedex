@@ -36,14 +36,14 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:8080  
       - name: fly setup
-        if: ${{ contains( join(github.event.commits.*.message, ', '), '#skip' ) == false }} 
+        if: ${{ !contains( join(github.event.commits.*.message, ', '), '#skip' ) }} 
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: fly deploy
-        if: ${{ contains( join(github.event.commits.*.message, ', '), '#skip' ) == false }}
+        if: ${{ !contains( join(github.event.commits.*.message, ', '), '#skip' ) }} 
         run: flyctl deploy --remote-only
   tag_release:
     needs: [simple_deployment_pipeline]
-    if: ${{ github.event_name == 'push' && contains( join(github.event.commits.*.message, ', '), '#skip' )  == false }}
+    if: ${{ github.event_name == 'push' && !contains( join(github.event.commits.*.message, ', '), '#skip' ) }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
