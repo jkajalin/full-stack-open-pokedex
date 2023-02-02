@@ -36,10 +36,10 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:8080  
       - name: fly setup
-        if:  ! contains( github.event.commits.*.message, '#skip' )
+        if: ${{ !contains( github.event.commits.*.message, '#skip' ) }} 
         uses: superfly/flyctl-actions/setup-flyctl@master
       - name: fly deploy
-        if: ! contains( github.event.commits.*.message, '#skip' )
+        if: ${{ !contains( github.event.commits.*.message, '#skip' ) }}
         run: flyctl deploy --remote-only
   tag_release:
     needs: [simple_deployment_pipeline]
