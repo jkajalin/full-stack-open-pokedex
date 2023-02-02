@@ -8,7 +8,7 @@ on:
 
 jobs:
   hello_world_job:
-    if: ! contains( join(github.event.commits.*.message, ', '), '#skip' )
+    if: ${{ !contains( join(github.event.commits.*.message, ', '), '#skip' ) }}
     runs-on: ubuntu-20.04
     steps:
       - name: Say hello

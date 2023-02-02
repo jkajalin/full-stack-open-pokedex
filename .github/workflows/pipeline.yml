@@ -47,8 +47,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: '0'
+        with:          
           ref: master
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.61.0
