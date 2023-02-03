@@ -58,7 +58,7 @@ jobs:
           DEFAULT_BUMP: patch
   notify-discord:
     needs: [simple_deployment_pipeline]
-    if: ${{ !contains( join(github.event.commits.*.message, ', '), '#skip' ) || !contains( join(github.event.commits.*.message, ', '), '#nodisco' ) }}
+    if: ${{ !contains( join(github.event.commits.*.message, ', '), '#nodisco' ) }}
     runs-on: ubuntu-20.04
     steps:
       - name: Success
