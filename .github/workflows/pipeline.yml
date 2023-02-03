@@ -64,15 +64,25 @@ jobs:
       - name: Success
         uses: rjstone/discord-webhook-notify@v1
         if: success()
+        env: 
+          REPOSITORY: ${{ github.repository }}
         with:
           severity: info
-          description: 'Pipeline succeed! :rocket:'
+          description: 'Pipeline succeed! :rocket:
+            \n $REPOSITORY
+            '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
+        env: 
+          REPOSITORY: ${{ github.repository }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         with:
           severity: error
           description: ${{ join(github.event.commits.*.url, '\n') }}
-          details: 'Pipeline Failed! :poo:'
+          details: 'Pipeline Failed! :poo:
+            \n $REPOSITORY
+            \n commit by $TRIGGERING_ACTOR
+            '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
