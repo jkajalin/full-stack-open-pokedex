@@ -66,12 +66,13 @@ jobs:
         if: success()
         with:
           severity: info
-          details: Pipeline Succeeded!
+          description: 'Pipeline succeed! :rocket:'
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure
         uses: rjstone/discord-webhook-notify@v1
         if: failure()
         with:
           severity: error
-          details: Pipeline Failed!
+          description: ${{ join(github.event.commits.*.url), '\n' }}
+          details: 'Pipeline Failed! :poo:'
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
