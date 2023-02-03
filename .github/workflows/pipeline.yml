@@ -73,6 +73,6 @@ jobs:
         if: failure()
         with:
           severity: error
-          description: ${{ join(github.event.commits.*.url), '\n' }}
+          description: ${{ join(github.event.commits.*.url, '\n') }}
           details: 'Pipeline Failed! :poo:'
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
