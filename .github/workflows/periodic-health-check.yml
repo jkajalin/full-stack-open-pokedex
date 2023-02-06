@@ -2,11 +2,10 @@ name: Periodic health check
 
 on:
   schedule:
-  - cron: '45 12,5 * * *'
+  - cron: '05 17,5 * * *'
 
 jobs:
-  health_check_job:
-    if: ${{ github.event_name == 'push' }}
+  health_check_job:    
     runs-on: ubuntu-20.04
     steps:
     - name: Check the deployed service URL
