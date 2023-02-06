@@ -41,6 +41,31 @@ jobs:
       - name: fly deploy
         if: ${{ !contains( join(github.event.commits.*.message, ', '), '#skip' ) }} 
         run: flyctl deploy --remote-only
+      - name: Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ success() && !contains( join(github.event.commits.*.message, ', '), '#nodisco' ) }}
+        env: 
+          REPOSITORY: ${{ github.repository }}
+        with:
+          severity: info
+          description: 'Pipeline succeed! :rocket:
+            \n $REPOSITORY
+            '
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: ${{ failure() && github.event_name == 'push' && !contains( join(github.event.commits.*.message, ', '), '#skip' ) }}
+        env: 
+          REPOSITORY: ${{ github.repository }}
+          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
+        with:
+          severity: error
+          description: ${{ join(github.event.commits.*.url, '\n') }}
+          details: 'Pipeline Failed! :poo:
+            \n $REPOSITORY
+            \n commit by $TRIGGERING_ACTOR
+            '
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release_bump:
     needs: [simple_deployment_pipeline]
     if: ${{ github.event_name == 'push' && !contains( join(github.event.commits.*.message, ', '), '#skip' ) }}
@@ -56,33 +81,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: master
           DEFAULT_BUMP: patch
-  notify-discord:
-    needs: [simple_deployment_pipeline]
-    if: ${{ !contains( join(github.event.commits.*.message, ', '), '#nodisco' ) }}
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Success
-        uses: rjstone/discord-webhook-notify@v1
-        if: success()
-        env: 
-          REPOSITORY: ${{ github.repository }}
-        with:
-          severity: info
-          description: 'Pipeline succeed! :rocket:
-            \n $REPOSITORY
-            '
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Failure
-        uses: rjstone/discord-webhook-notify@v1
-        if: failure()
-        env: 
-          REPOSITORY: ${{ github.repository }}
-          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
-        with:
-          severity: error
-          description: ${{ join(github.event.commits.*.url, '\n') }}
-          details: 'Pipeline Failed! :poo:
-            \n $REPOSITORY
-            \n commit by $TRIGGERING_ACTOR
-            '
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
