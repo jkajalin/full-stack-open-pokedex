@@ -44,27 +44,22 @@ jobs:
       - name: Success
         uses: rjstone/discord-webhook-notify@v1
         if: ${{ success() && !contains( join(github.event.commits.*.message, ', '), '#nodisco' ) }}
-        env: 
-          REPOSITORY: ${{ github.repository }}
         with:
           severity: info
           description: 'Pipeline succeed! :rocket:
-            ${{REPOSITORY}}
+            ${{github.repository}}
             '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure
         uses: rjstone/discord-webhook-notify@v1
         if: ${{ failure() && github.event_name == 'push' && !contains( join(github.event.commits.*.message, ', '), '#skip' ) }}
-        env: 
-          REPOSITORY: ${{ github.repository }}
-          TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         with:
           severity: error
           text: Houston, houston. We have a problem
           description: ${{ join(github.event.commits.*.url, '\n') }}
           details: 'Pipeline Failed! :poo: - 
-            ${{REPOSITORY}} - 
-            Commit by ${{TRIGGERING_ACTOR}}.
+            ${{github.repository}} - 
+            Commit by ${{github.triggering_actor}}.
             '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release_bump:
