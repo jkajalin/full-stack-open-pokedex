@@ -49,7 +49,7 @@ jobs:
         with:
           severity: info
           description: 'Pipeline succeed! :rocket:
-            \n $REPOSITORY
+            ${{REPOSITORY}}
             '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Failure
@@ -60,10 +60,11 @@ jobs:
           TRIGGERING_ACTOR: ${{ github.triggering_actor }}
         with:
           severity: error
+          text: Houston, houston. We have a problem
           description: ${{ join(github.event.commits.*.url, '\n') }}
-          details: 'Pipeline Failed! :poo:
-            \n $REPOSITORY
-            \n commit by $TRIGGERING_ACTOR
+          details: 'Pipeline Failed! :poo: - 
+            ${{$REPOSITORY}} - 
+            Commit by ${{TRIGGERING_ACTOR}}.
             '
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
   tag_release_bump:
