@@ -1,9 +1,8 @@
 name: Periodic health check
 
 on:
-  push:
-    branches: 
-    - master
+  schedule:
+  - cron: '22 14,5 * * *'
 
 jobs:
   health_check_job:
@@ -13,6 +12,6 @@ jobs:
     - name: Check the deployed service URL
       uses: jtalk/url-health-check-action@v3
       with:        
-        url: https://jk-full-stack-pokedex.fly.dev/fail
+        url: https://jk-full-stack-pokedex.fly.dev
         max-attempts: 3
         retry-delay: 5s
